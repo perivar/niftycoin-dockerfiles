@@ -6,7 +6,7 @@
   "logo": "/images/logo.png",
   "headerlogo": false,
   "favicon": "public/favicon.ico",
-  "theme": "Cyborg",
+  "theme": "Yeti",
   "port" : 3001,
   "dbsettings": {
     "user": "iquidus",

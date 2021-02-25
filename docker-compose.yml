@@ -34,7 +34,7 @@ services:
     # add variables from the docker-compose environment to the container.
     # adding to this environment can be done by using a .env file
     environment:
-      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer","address":"127.0.0.1:3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"address":"mongo"},"wallet":{"host":"coin","port":"${RPCPORT}","username":"${RPCUSER}","password":"${RPCPASS}"}}
+      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer","address":"127.0.0.1:3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"user":"iquidus","password":"3xp!0reR","database":"explorerdb","address":"mongo","port":"27017"},"wallet":{"host":"${RPCHOST}","port":"${RPCPORT}","username":"${RPCUSER}","password":"${RPCPASS}"}}
 
     restart: unless-stopped
 
