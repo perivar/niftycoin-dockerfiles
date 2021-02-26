@@ -1,19 +1,39 @@
 version: '3.7'
 services:
+  coin:
+    container_name: container-coin
+    image: perivar/niftycoin:latest
+
+    restart: always
+
+    environment:
+      - DISABLEWALLET=1
+      - PRINTTOCONSOLE=1
+      - RPCUSER=${RPCUSER}
+      - RPCPASSWORD=${RPCPASS}
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 6333:5333
+
+    # Expose ports to other services and not the host machines
+    expose:
+      - 9332
+
+    volumes:
+      - niftycoind-data:/niftycoin
+
+    command: ["-rpcallowip=0.0.0.0/0", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
+
   mongo:
     container_name: container-mongodb
     image: mongo:4.4-bionic
 
-#    networks: 
-#      - internal
+    restart: always
 
-    ports:
-      - 27017:27017
-
+    # Expose ports to other services and not the host machines
     expose:
       - 27017
-
-    restart: always
 
     environment:
        MONGO_INITDB_ROOT_USERNAME: root
@@ -29,7 +49,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-#      dockerfile: Dockerfile-pm2
+
+    restart: unless-stopped
 
     # add variables from the docker-compose environment to the container.
     # adding to this environment can be done by using a .env file
@@ -38,24 +59,32 @@ services:
 
     restart: unless-stopped
 
-#    networks:
-#      - bridge
-#      - internal
-
+    # Ports will be exposed to the host machine to a random port or a given port
     ports:
       - 3001:3001
-
-    expose:
-      - 3001
 
     volumes:
       - explorer:/home/iquidus
 
     depends_on:
       - mongo
+      - coin
 
 volumes:
   mongo:
     driver: local
   explorer:
     driver: local
+  niftycoind-data:
+    driver: local
+
+# Remember to start the network before running this file:
+# $ docker network create crossword-net
+#
+# Then you can start each of the docker-compose.yml files like this:
+# $ docker-compose -f project_one/docker-compose.yml up -d
+# $ docker-compose -f project_two/docker-compose.yml up -d
+networks:
+  default:
+    external:
+      name: niftynet
