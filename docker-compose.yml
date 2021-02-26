@@ -1,7 +1,6 @@
-version: '3.7'
-services:
-  coin:
-    container_name: container-coin
+version: "3.7"
+x-niftynode:
+    &default-niftynode
     image: perivar/niftycoin:latest
 
     restart: always
@@ -14,17 +13,110 @@ services:
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
+      - 5333:5333 # open this port to all external
+      - 19335:19335
+
+    volumes:
+      - niftynode-data:/niftycoin
+
+    command: ["-rpcallowip=::/0"]
+
+services:
+  niftynode-rpc:
+    <<: *default-niftynode
+    container_name: container-niftynode-rpc
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
       - 127.0.0.1:9332:9332 # open this port only to the host
-      - 6333:5333 # open this port to all external
+      - 3333:5333 # open this port to all external
 
     # Expose ports to other services and not the host machines
     expose:
       - 9332
 
     volumes:
-      - niftycoind-data:/niftycoin
+      - niftynode-rpc-data:/niftycoin
 
-    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
+    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-addnode=116.203.83.168:3333", "-addnode=116.203.83.168:4333", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:6333", "-addnode=116.203.83.168:7333", "-addnode=116.203.83.168:8333", "-addnode=116.203.83.168:9333"]
+
+  niftynode-one:
+    <<: *default-niftynode
+    container_name: container-niftynode-one
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 4333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-one-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
+
+  niftynode-two:
+    <<: *default-niftynode
+    container_name: container-niftynode-two
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 5333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-two-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
+
+  niftynode-three:
+    <<: *default-niftynode
+    container_name: container-niftynode-three
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 6333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-three-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
+
+  niftynode-four:
+    <<: *default-niftynode
+    container_name: container-niftynode-four
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 7333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-four-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
+
+  niftynode-five:
+    <<: *default-niftynode
+    container_name: container-niftynode-five
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 8333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-five-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
+
+  niftynode-six:
+    <<: *default-niftynode
+    container_name: container-niftynode-six
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 9333:5333 # open this port to all external
+
+    volumes:
+      - niftynode-six-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1"]
 
   mongo:
     container_name: container-mongodb
@@ -70,14 +162,26 @@ services:
 
     depends_on:
       - mongo
-      - coin
+      - niftynode-rpc
 
 volumes:
   mongo:
     driver: local
   explorer:
     driver: local
-  niftycoind-data:
+  niftynode-rpc-data:
+    driver: local
+  niftynode-one-data:
+    driver: local
+  niftynode-two-data:
+    driver: local
+  niftynode-three-data:
+    driver: local
+  niftynode-four-data:
+    driver: local
+  niftynode-five-data:
+    driver: local
+  niftynode-six-data:
     driver: local
 
 # Remember to start the network before running this file:
