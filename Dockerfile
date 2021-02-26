@@ -8,6 +8,7 @@ COPY iquidus-entrypoint.sh /entrypoint.sh
 RUN adduser -s /bin/ash -S  -u 1001 iquidus \
      && chmod +x /entrypoint.sh \
      && git clone https://github.com/iquidus/explorer.git app \
+#     && sed -i 's/\/ext\/getlasttxsajax\/0/\/ext\/getlasttxsajax\/0.00000001/g' /app/views/index.pug \
      && cd app \
      && npm install --production 
 
@@ -20,3 +21,4 @@ RUN  chown -R iquidus /app
 USER iquidus
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+

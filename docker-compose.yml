@@ -14,7 +14,8 @@ services:
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
-      - 6333:5333
+      - 127.0.0.1:9332:9332 # open this port only to the host
+      - 6333:5333 # open this port to all external
 
     # Expose ports to other services and not the host machines
     expose:
@@ -23,7 +24,7 @@ services:
     volumes:
       - niftycoind-data:/niftycoin
 
-    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
+    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
 
   mongo:
     container_name: container-mongodb
@@ -63,8 +64,9 @@ services:
     ports:
       - 3001:3001
 
-    volumes:
-      - explorer:/home/iquidus
+#no sure if we want to store the volume?
+#    volumes:
+#      - explorer:/app
 
     depends_on:
       - mongo
