@@ -23,7 +23,7 @@ run_market() {
 run_peers() {
  sleep 140
  while true ; do
-   node --stack-size=10000 ./scripts/sync.js index update 
+   node --stack-size=10000 ./scripts/peers.js 
    sleep 300
  done
 }
