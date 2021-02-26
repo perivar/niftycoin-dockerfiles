@@ -23,7 +23,7 @@ services:
     volumes:
       - niftycoind-data:/niftycoin
 
-    command: ["-rpcallowip=0.0.0.0/0", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
+    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:8333"]
 
   mongo:
     container_name: container-mongodb
