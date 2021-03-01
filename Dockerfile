@@ -12,8 +12,8 @@ RUN adduser -s /bin/ash -S  -u 1001 iquidus \
      && cd app \
      && npm install --production 
 
-#COPY logo.png /app/images/logo.png
-#COPY logo.png /app/public/favicon.ico
+COPY logo.png /app/public/images/logo.png
+COPY logo.png /app/public/favicon.ico
 COPY iquidus-settings.json /app/settings.json
 
 RUN  chown -R iquidus /app
