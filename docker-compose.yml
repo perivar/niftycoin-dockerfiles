@@ -118,6 +118,32 @@ services:
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
+  niftynode-test-one:
+    <<: *default-niftynode
+    container_name: container-niftynode-test-one
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 13335:13335 # open this port to all external
+
+    volumes:
+      - niftynode-test-one-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1", "-testnet=1"]
+
+  niftynode-test-two:
+    <<: *default-niftynode
+    container_name: container-niftynode-test-two
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 14335:13335 # open this port to all external
+
+    volumes:
+      - niftynode-test-two-data:/niftycoin
+
+    command: ["-rpcallowip=::/0", "-server=1", "-testnet=1"]
+
   mongo:
     container_name: container-mongodb
     image: mongo:4.4-bionic
@@ -182,6 +208,10 @@ volumes:
   niftynode-five-data:
     driver: local
   niftynode-six-data:
+    driver: local
+  niftynode-test-one-data:
+    driver: local
+  niftynode-test-two-data:
     driver: local
 
 # Remember to start the network before running this file:
