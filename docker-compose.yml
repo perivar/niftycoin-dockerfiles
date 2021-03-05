@@ -118,13 +118,31 @@ services:
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
+  niftynode-test-rpc:
+    <<: *default-niftynode
+    container_name: container-niftynode-test-rpc
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 127.0.0.1:13332:13332 # open this port only to the host
+      - 13335:13335 # open this port to all external
+
+    # Expose ports to other services and not the host machines
+    expose:
+      - 13332
+
+    volumes:
+      - niftynode-test-rpc-data:/niftycoin
+
+    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-testnet=1", "-txindex", "-addnode=116.203.83.168:13335", "-addnode=116.203.83.168:14335", "-addnode=116.203.83.168:15335"]
+
   niftynode-test-one:
     <<: *default-niftynode
     container_name: container-niftynode-test-one
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
-      - 13335:13335 # open this port to all external
+      - 14335:13335 # open this port to all external
 
     volumes:
       - niftynode-test-one-data:/niftycoin
@@ -137,7 +155,7 @@ services:
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
-      - 14335:13335 # open this port to all external
+      - 15335:13335 # open this port to all external
 
     volumes:
       - niftynode-test-two-data:/niftycoin
@@ -174,7 +192,7 @@ services:
     # add variables from the docker-compose environment to the container.
     # adding to this environment can be done by using a .env file
     environment:
-      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer","address":"127.0.0.1:3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"user":"iquidus","password":"3xp!0reR","database":"explorerdb","address":"mongo","port":"27017"},"wallet":{"host":"${RPCHOST}","port":"${RPCPORT}","username":"${RPCUSER}","password":"${RPCPASS}"}}
+      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer","address":"127.0.0.1:3001","port":"3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"user":"iquidus","password":"3xp!0reR","database":"explorerdb","address":"mongo","port":"27017"},"wallet":{"host":"${RPCHOST}","port":"${RPCPORT}","username":"${RPCUSER}","password":"${RPCPASS}"}}
 
     restart: unless-stopped
 
@@ -182,18 +200,60 @@ services:
     ports:
       - 3001:3001
 
-#no sure if we want to store the volume?
-#    volumes:
-#      - explorer:/app
-
     depends_on:
       - mongo
       - niftynode-rpc
 
+  mongo-test:
+    container_name: container-test-mongodb
+    image: mongo:4.4-bionic
+
+    restart: always
+
+    # Expose ports to other services and not the host machines
+#    expose:
+#      - 27017
+
+    ports:
+#      - 127.0.0.1:27018:27017
+      - 127.0.0.1:27018:27017
+
+    environment:
+       MONGO_INITDB_ROOT_USERNAME: root
+       MONGO_INITDB_ROOT_PASSWORD: password
+       MONGO_INITDB_DATABASE: root-db
+
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # reload using docker-compose down -v (Note that this deletes the volumes!)
+      - mongo-test:/data/db
+
+  explorer-test:
+    container_name: container-test-explorer
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    # add variables from the docker-compose environment to the container.
+    # adding to this environment can be done by using a .env file
+    environment:
+      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer Testnet","address":"127.0.0.1:3002","port":"3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"user":"iquidus","password":"3xp!0reR","database":"explorerdb","address":"mongo","port":"27018"},"wallet":{"host":"${RPCHOST}","port":"${RPCPORTTEST}","username":"${RPCUSER}","password":"${RPCPASS}"}}
+
+    restart: unless-stopped
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 3002:3001
+
+    depends_on:
+      - mongo-test
+      - niftynode-test-rpc
+
 volumes:
   mongo:
     driver: local
-  explorer:
+  mongo-test:
     driver: local
   niftynode-rpc-data:
     driver: local
@@ -208,6 +268,8 @@ volumes:
   niftynode-five-data:
     driver: local
   niftynode-six-data:
+    driver: local
+  niftynode-test-rpc-data:
     driver: local
   niftynode-test-one-data:
     driver: local
