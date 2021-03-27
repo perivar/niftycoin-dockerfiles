@@ -1,0 +1,82 @@
+version: "3.7"
+services:
+  redis:
+    image: redis:alpine
+
+    restart: always
+
+    container_name: nifty-redis
+
+    ports:
+      - "127.0.0.1:6379:6379"
+
+    volumes:
+      - nifty-nomp-redis-data:/data
+
+    entrypoint: redis-server --appendonly yes
+
+    logging:
+      options:
+        max-size: "200m"
+        max-file: "10"
+
+  nomp:
+    container_name: nifty-nomp
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    # add variables from the docker-compose environment to the container.
+    # adding to this environment can be done by using a .env file
+    environment:
+       - STRATUM_HOST=116.203.83.168
+       - REDIS_HOST=redis
+       - REDIS_PORT=6379
+       - RPCUSER=${RPCUSER}
+       - RPCPASS=${RPCPASS}
+       - RPCHOST=${RPCHOST}
+       - RPCPORT=${RPCPORT}
+       - RPCPORTTEST=${RPCPORTTEST}
+
+    restart: unless-stopped
+
+    # Ports will be exposed to the host machine to a random port or a given port
+    ports:
+      - 8888:8888
+      - 3008:3008
+      - 3032:3032
+      - 3256:3256
+
+    volumes:
+      - nifty-nomp-coins:/usr/src/app/coins
+      - nifty-nomp-pool_configs:/usr/src/app/pool_configs
+
+    depends_on:
+      - redis
+#      - niftynode-rpc
+
+    logging:
+      options:
+        max-size: "200m"
+        max-file: "10"
+
+volumes:
+  nifty-nomp-redis-data:
+    driver: local
+  nifty-nomp-coins:
+    driver: local
+  nifty-nomp-pool_configs:
+    driver: local
+
+# Remember to start the network before running this file:
+# $ docker network create mydockernet
+#
+# Then you can start each of the docker-compose.yml files like this:
+# $ docker-compose -f project_one/docker-compose.yml up -d
+# $ docker-compose -f project_two/docker-compose.yml up -d
+networks:
+  default:
+    external:
+      name: mydockernet
