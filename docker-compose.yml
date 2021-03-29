@@ -26,6 +26,10 @@ services:
     <<: *default-niftynode
     container_name: container-niftynode-rpc
 
+    # make sure the wallet is not disabled so that we can use this node for our mining pool
+    environment:
+      - DISABLEWALLET=0
+
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
       - 127.0.0.1:3332:3332 # open this port only to the host
@@ -121,6 +125,10 @@ services:
   niftynode-test-rpc:
     <<: *default-niftynode
     container_name: container-niftynode-test-rpc
+
+    # make sure the wallet is not disabled so that we can use this node for our mining pool
+    environment:
+      - DISABLEWALLET=0
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
