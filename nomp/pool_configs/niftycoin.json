@@ -5,13 +5,13 @@
     "address": "NQaywz2no26t2hY3PfAQhiCesvBF9qZeMV",
 
     "rewardRecipients": {
-	"NUcBvW67GEqi8CXYPcL4Y5qzw7Vf9rp7wg": 2
+	"NUcBvW67GEqi8CXYPcL4Y5qzw7Vf9rp7wg": 2.0
     },
 
     "paymentProcessing": {
         "enabled": true,
-        "paymentInterval": 20,
-        "minimumPayment": 70,
+        "paymentInterval": 30,
+        "minimumPayment": 0.1,
         "daemon": {
             "host": "niftynode-rpc",
             "port": 3332,

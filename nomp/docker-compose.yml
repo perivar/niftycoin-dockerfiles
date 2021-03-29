@@ -53,6 +53,8 @@ services:
     volumes:
       - nifty-nomp-coins:/usr/src/app/coins
       - nifty-nomp-pool_configs:/usr/src/app/pool_configs
+      # while debugging why payment doesnt work
+      - nifty-nomp-libs:/usr/src/app/libs
 
     depends_on:
       - redis
@@ -69,6 +71,8 @@ volumes:
   nifty-nomp-coins:
     driver: local
   nifty-nomp-pool_configs:
+    driver: local
+  nifty-nomp-libs:
     driver: local
 
 # Remember to start the network before running this file:
