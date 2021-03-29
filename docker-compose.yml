@@ -29,6 +29,9 @@ services:
     # make sure the wallet is not disabled so that we can use this node for our mining pool
     environment:
       - DISABLEWALLET=0
+      - PRINTTOCONSOLE=1
+      - RPCUSER=${RPCUSER}
+      - RPCPASSWORD=${RPCPASS}
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:
@@ -129,6 +132,9 @@ services:
     # make sure the wallet is not disabled so that we can use this node for our mining pool
     environment:
       - DISABLEWALLET=0
+      - PRINTTOCONSOLE=1
+      - RPCUSER=${RPCUSER}
+      - RPCPASSWORD=${RPCPASS}
 
     # Ports will be exposed to the host machine to a random port or a given port
     ports:

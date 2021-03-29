@@ -18,6 +18,9 @@ ADD run.sh /usr/src/app/
 VOLUME /usr/src/app/coins
 VOLUME /usr/src/app/pool_configs
 
+COPY coins/niftycoin.json /usr/src/app/coins/
+COPY pool_configs/niftycoin.json /usr/src/app/pool_configs/
+
 EXPOSE 8888
 EXPOSE 4000
 EXPOSE 4008
