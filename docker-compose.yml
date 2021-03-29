@@ -17,7 +17,7 @@ x-niftynode:
       - 13335:13335
 
     volumes:
-      - niftynode-data:/niftycoin
+      - niftynode-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0"]
 
@@ -36,7 +36,7 @@ services:
       - 3332
 
     volumes:
-      - niftynode-rpc-data:/niftycoin
+      - niftynode-rpc-data:/root/.niftycoin
 
     command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-addnode=116.203.83.168:4333", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:6333", "-addnode=116.203.83.168:7333", "-addnode=116.203.83.168:8333", "-addnode=116.203.83.168:9333"]
 
@@ -49,7 +49,7 @@ services:
       - 4333:3333 # open this port to all external
 
     volumes:
-      - niftynode-one-data:/niftycoin
+      - niftynode-one-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -62,7 +62,7 @@ services:
       - 5333:3333 # open this port to all external
 
     volumes:
-      - niftynode-two-data:/niftycoin
+      - niftynode-two-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -75,7 +75,7 @@ services:
       - 6333:3333 # open this port to all external
 
     volumes:
-      - niftynode-three-data:/niftycoin
+      - niftynode-three-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -88,7 +88,7 @@ services:
       - 7333:3333 # open this port to all external
 
     volumes:
-      - niftynode-four-data:/niftycoin
+      - niftynode-four-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -101,7 +101,7 @@ services:
       - 8333:3333 # open this port to all external
 
     volumes:
-      - niftynode-five-data:/niftycoin
+      - niftynode-five-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -114,7 +114,7 @@ services:
       - 9333:3333 # open this port to all external
 
     volumes:
-      - niftynode-six-data:/niftycoin
+      - niftynode-six-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1"]
 
@@ -132,7 +132,7 @@ services:
       - 13332
 
     volumes:
-      - niftynode-test-rpc-data:/niftycoin
+      - niftynode-test-rpc-data:/root/.niftycoin
 
     command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-testnet=1", "-txindex", "-addnode=116.203.83.168:14335", "-addnode=116.203.83.168:15335"]
 
@@ -145,7 +145,7 @@ services:
       - 14335:13335 # open this port to all external
 
     volumes:
-      - niftynode-test-one-data:/niftycoin
+      - niftynode-test-one-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1", "-testnet=1"]
 
@@ -158,7 +158,7 @@ services:
       - 15335:13335 # open this port to all external
 
     volumes:
-      - niftynode-test-two-data:/niftycoin
+      - niftynode-test-two-data:/root/.niftycoin
 
     command: ["-rpcallowip=::/0", "-server=1", "-testnet=1"]
 
