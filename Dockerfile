@@ -19,6 +19,8 @@ COPY logo.png /app/public/favicon.ico
 COPY iquidus-settings.json /app/settings.json
 # fix an error where peers are constantly dropped because of local docker ip without country code etc
 COPY iquidus-peers.js /app/scripts/peers.js
+# add CORS support
+COPY iquidus-app.js /app/app.js
 
 RUN  chown -R iquidus /app
 
