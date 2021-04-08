@@ -1,23 +1,37 @@
-FROM node:current-alpine
+FROM ubuntu:latest
 
-# Build deps
-RUN apk --no-cache --virtual builddeps add git python py-pip make gcc g++ krb5-dev
+RUN apt-get update && \
+    apt-get install -y curl sudo nano net-tools build-essential git-core python telnet iputils-ping libkrb5-dev cron && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY eiquidus-entrypoint.sh /entrypoint.sh
+RUN curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash - && \
+	apt-get install -y nodejs
 
-RUN adduser -s /bin/ash -S  -u 1001 eiquidus \
-     && chmod +x /entrypoint.sh \
-     && git clone https://github.com/team-exor/eiquidus.git app \
+RUN git clone https://github.com/team-exor/eiquidus.git app \
      && cd app \
-     && npm install --production 
+     && npm install --production
 
 COPY logo.png /app/public/img/logo.png
 COPY logo.png /app/public/img/header_logo.png
 COPY logo.png /app/public/favicon.ico
 COPY eiquidus-settings.json /app/settings.json
 
-RUN  chown -R eiquidus /app
+# Copy cronjob file to the cron.d directory
+COPY cronjob /etc/cron.d/eiquidus-cron
 
-USER eiquidus
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/eiquidus-cron
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+# Apply cron job
+RUN crontab /etc/cron.d/eiquidus-cron
+ 
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+COPY eiquidus-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ 
+USER root
+EXPOSE 3001
+
+ENTRYPOINT [ "./entrypoint.sh" ]

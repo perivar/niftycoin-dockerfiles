@@ -1,0 +1,4 @@
+*/1 * * * * /app/scripts/sync.sh /usr/local/bin/nodejs update > /proc/1/fd/1 2>/proc/1/fd/2
+*/2 * * * * /app/scripts/sync.sh /usr/local/bin/nodejs market > /proc/1/fd/1 2>/proc/1/fd/2
+*/5 * * * * /app/scripts/sync.sh /usr/local/bin/nodejs peers > /proc/1/fd/1 2>/proc/1/fd/2
+*/5 * * * * /app/scripts/sync.sh /usr/local/bin/nodejs masternodes > /proc/1/fd/1 2>/proc/1/fd/2
