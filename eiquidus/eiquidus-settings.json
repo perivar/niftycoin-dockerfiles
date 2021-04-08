@@ -32,7 +32,7 @@
     "symbol": "EXOR"
   },
   "shared_pages": {
-    "theme": "Superhero",
+    "theme": "Cerulean",
     "page_title": "eIquidus",
     "favicon": "public/favicon.ico",
     "logo": "/img/logo.png",
@@ -53,29 +53,29 @@
       "home_link_logo_height": 50,
       "panels": {
         "network_panel": {
-          "enabled": false,
-          "display_order": 0,
+          "enabled": true,
+          "display_order": 4,
           "nethash": "getnetworkhashps",
-          "nethash_units": "G"
+          "nethash_units": "K"
         },
         "difficulty_panel": {
-          "enabled": false,
-          "display_order": 0
+          "enabled": true,
+          "display_order": 2
         },
         "masternodes_panel": {
           "enabled": true,
-          "display_order": 2
+          "display_order": 5
         },
         "coin_supply_panel": {
           "enabled": true,
           "display_order": 1
         },
         "price_panel": {
-          "enabled": true,
+          "enabled": false,
           "display_order": 4
         },
         "market_cap_panel": {
-          "enabled": true,
+          "enabled": false,
           "display_order": 5
         },
         "logo_panel": {
