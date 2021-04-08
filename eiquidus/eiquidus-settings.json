@@ -154,11 +154,11 @@
   },
   "block_page": {
     "show_panels": false,
-    "genesis_block": "00014f36c648cdbc750f7dd28487a23cd9e0b0f95f5fccc5b5d01367e3f57469"
+    "genesis_block": "a407bbef8dc8d12239015e1b8bad0009416afe993b696609dab2b3f483f163e5"
   },
   "transaction_page": {
     "show_panels": false,
-    "genesis_tx": "dd1d332ad2d8d8f49195056d482ae3c96fd2d16e9d166413b27ca7f19775644c"
+    "genesis_tx": "c9ac8da0eeb9de4826fb55690a0b15eaa4b477cb672c30c574992ab6d1b6b18d"
   },
   "address_page": {
     "show_panels": false,
@@ -190,9 +190,9 @@
       "page_length_options": [ 10, 25, 50, 75, 100, 250, 500, 1000 ],
       "items_per_page": 10,
       "reload_table_seconds": 45,
-      "min_amount": 5000,
-      "low_warning_flag": 50000,
-      "high_warning_flag": 100000
+      "min_amount": 50.1,
+      "low_warning_flag": 1000,
+      "high_warning_flag": 5000
     }
   },
   "network_page": {
@@ -273,10 +273,10 @@
     "enabled": true,
     "show_panels": false,
     "sample_data": {
-      "blockindex": 64152,
-      "blockhash": "775d67da29dd6553268061f86368d06654944dd5d5c61db4c97e4c7960c11a74",
-      "txhash": "6cb3babd256de253f926f10bc8574dadf0a3e2fc8380107b81eb07c67d1e73ed",
-      "address": "ELvb8AZRgHmdsDnD1HYFwbSY4UkPhoECCW"
+      "blockindex": 200,
+      "blockhash": "6d2cd8977d4faf43a9582a41621caf75403474f2591cc1c9a716e8db5ab0de46",
+      "txhash": "feb177eacd200515cbe56a9dc5d0dc699a2f5902661b528e6d0a9a3107c76603",
+      "address": "NfNPPMJAYqWFHBpVakAaiEJrRB6ohqLi7Y"
     },
     "public_apis": {
       "rpc": {
