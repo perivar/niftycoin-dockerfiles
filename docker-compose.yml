@@ -176,53 +176,7 @@ services:
 
     command: ["-rpcallowip=::/0", "-server=1", "-testnet=1"]
 
-  mongo:
-    container_name: container-mongodb
-    image: mongo:4.2-bionic
-
-    restart: always
-
-    # Expose ports to other services and not the host machines
-    expose:
-      - 27017
-
-    environment:
-       MONGO_INITDB_ROOT_USERNAME: root
-       MONGO_INITDB_ROOT_PASSWORD: password
-       MONGO_INITDB_DATABASE: root-db
-
-    volumes:
-      - ./iquidus/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # reload using docker-compose down -v (Note that this deletes the volumes!)
-      - mongo:/data/db
-
-  explorer:
-    container_name: container-explorer
-    build:
-      context: ./iquidus/
-      dockerfile: Dockerfile
-
-    restart: unless-stopped
-
-    # add variables from the docker-compose environment to the container.
-    # adding to this environment can be done by using a .env file
-    environment:
-      - IQUIDUS_SETTINGS={"title":"NiftyCoin Explorer","address":"127.0.0.1:3001","port":"3001","coin":"NiftyCoin","symbol":"NFY","dbsettings":{"user":"iquidus","password":"3xp!0reR","database":"explorerdb","address":"mongo","port":"27017"},"wallet":{"host":"${RPCHOST}","port":"${RPCPORT}","username":"${RPCUSER}","password":"${RPCPASS}"}}
-
-    restart: unless-stopped
-
-    # Ports will be exposed to the host machine to a random port or a given port
-    ports:
-      - 3001:3001
-
-    depends_on:
-      - mongo
-      - niftynode-rpc
-
 volumes:
-  mongo:
-    driver: local
-#  mongo-test:
-#    driver: local
   niftynode-rpc-data:
     driver: local
   niftynode-one-data:
