@@ -98,26 +98,26 @@
         {
           "enabled": true,
           "tooltip_text": "Github",
-          "url": "https://github.com/team-exor",
+          "url": "https://github.com/niftycoin-project/niftycoin",
           "fontawesome_class": "fab fa-github",
           "image_path": ""
         },
         {
-          "enabled": true,
+          "enabled": false,
           "tooltip_text": "Twitter",
           "url": "https://twitter.com/ExorOfficial",
           "fontawesome_class": "fab fa-twitter",
           "image_path": ""
         },
         {
-          "enabled": true,
+          "enabled": false,
           "tooltip_text": "Discord",
           "url": "https://discord.gg/dSuGm3y",
           "fontawesome_class": "fab fa-discord",
           "image_path": ""
         },
         {
-          "enabled": true,
+          "enabled": false,
           "tooltip_text": "Telegram",
           "url": "https://t.me/Exorofficial",
           "fontawesome_class": "fab fa-telegram",
@@ -126,12 +126,12 @@
         {
           "enabled": true,
           "tooltip_text": "Website",
-          "url": "https://exor.io",
+          "url": "https://niftycoin.org",
           "fontawesome_class": "",
           "image_path": "/img/external.png"
         },
         {
-          "enabled": true,
+          "enabled": false,
           "tooltip_text": "Coingecko",
           "url": "https://www.coingecko.com/en/coins/exor",
           "fontawesome_class": "",

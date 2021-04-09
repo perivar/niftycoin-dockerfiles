@@ -7,8 +7,6 @@ node -p "try{JSON.stringify({...require('$CONFIG'), ...JSON.parse(process.env.EI
 mv "${CONFIG}.tmp" "${CONFIG}"
 
 # start cron
-#/usr/sbin/crond -f &
-#cron &
 service cron start
 
 cd /app
