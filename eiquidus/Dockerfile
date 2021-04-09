@@ -13,7 +13,7 @@ RUN git clone https://github.com/team-exor/eiquidus.git app \
 
 # fix logos and settings
 COPY logo.png /app/public/img/logo.png
-COPY logo.png /app/public/img/header_logo.png
+COPY logo-inverted.png /app/public/img/header_logo.png
 COPY logo.png /app/public/favicon.ico
 COPY eiquidus-settings.json /app/settings.json
 
