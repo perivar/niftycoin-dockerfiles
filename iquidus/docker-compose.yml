@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-  mongo:
-    container_name: container-mongodb
+  iquidus-mongo:
+    container_name: iquidus-mongodb
     image: mongo:4.2-bionic
 
     restart: always
@@ -17,10 +17,10 @@ services:
 
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # reload using docker-compose down -v (Note that this deletes the volumes!)
-      - mongo:/data/db
+      - iquidus-mongo:/data/db
 
   explorer:
-    container_name: container-explorer
+    container_name: iquidus-explorer
     build:
       context: .
       dockerfile: Dockerfile
@@ -39,11 +39,11 @@ services:
       - 3001:3001
 
     depends_on:
-      - mongo
-      - niftynode-rpc
+      - iquidus-mongo
+#      - niftynode-rpc
 
 volumes:
-  mongo:
+  iquidus-mongo:
     driver: local
 
 # Remember to start the network before running this file:

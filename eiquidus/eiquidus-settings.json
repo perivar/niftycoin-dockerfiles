@@ -32,8 +32,8 @@
     "symbol": "EXOR"
   },
   "shared_pages": {
-    "theme": "Cerulean",
-    "page_title": "eIquidus",
+    "theme": "Cosmo",
+    "page_title": "Official NiftyCoin Explorer",
     "favicon": "public/favicon.ico",
     "logo": "/img/logo.png",
     "date_time": {
@@ -90,7 +90,7 @@
     },
     "page_footer": {
       "sticky_footer": false,
-      "bgcolor": "",
+      "bgcolor": "dark",
       "footer_height_desktop": "50px",
       "footer_height_tablet": "70px",
       "footer_height_mobile": "70px",
