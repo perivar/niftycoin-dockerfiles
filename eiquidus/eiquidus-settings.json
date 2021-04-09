@@ -63,7 +63,7 @@
           "display_order": 2
         },
         "masternodes_panel": {
-          "enabled": true,
+          "enabled": false,
           "display_order": 5
         },
         "coin_supply_panel": {
@@ -174,7 +174,7 @@
     "show_panels": false
   },
   "masternodes_page": {
-    "enabled": true,
+    "enabled": false,
     "show_panels": false,
     "show_last_updated": true,
     "masternode_table": {
@@ -368,7 +368,7 @@
     "check_timeout": 250,
     "save_stats_after_sync_blocks": 100,
     "show_sync_msg_when_syncing_more_than_blocks": 1000,
-    "supply": "GETINFO"
+    "supply": "COINBASE"
   },
   "labels": {
     "EJ6yc47cAZMGWHFccc9gfGbDLYuyNhP6wL": {

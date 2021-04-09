@@ -11,10 +11,14 @@ RUN git clone https://github.com/team-exor/eiquidus.git app \
      && cd app \
      && npm install --production
 
+# fix logos and settings
 COPY logo.png /app/public/img/logo.png
 COPY logo.png /app/public/img/header_logo.png
 COPY logo.png /app/public/favicon.ico
 COPY eiquidus-settings.json /app/settings.json
+
+# fix an error where peers are constantly dropped because of local docker ip without country code etc
+COPY eiquidus-sync.js /app/scripts/sync.js
 
 # Copy cronjob file to the cron.d directory
 COPY cronjob /etc/cron.d/eiquidus-cron
