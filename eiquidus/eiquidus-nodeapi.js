@@ -109,6 +109,7 @@ module.exports = function() {
       console.log('api settings enabled: ' + settings.api_page.enabled);
       console.log('method enabled in settings: ' + method_enabled);
       console.log('req headers: ' + req.headers.host);
+      console.log('accesslist[method]: ' + accesslist[method]);
 
       // only show disabled msg for outside calls. internal calls should always go through
       if ((!settings.api_page.enabled || method_enabled == null || !method_enabled) && req.headers.host.indexOf('127.0.0.1') == -1)

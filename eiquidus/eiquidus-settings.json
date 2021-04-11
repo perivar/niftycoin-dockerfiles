@@ -403,7 +403,8 @@
     "getvotelist": "masternodelist votes",
     "getmasternodecount": "getmasternodecount",
     "getmasternodelist": "listmasternodes",
-    "verifymessage": "verifymessage"
+    "verifymessage": "verifymessage",
+    "sendrawtransaction": "sendrawtransaction"
   },
   "blockchain_specific": {
     "bitcoin": {

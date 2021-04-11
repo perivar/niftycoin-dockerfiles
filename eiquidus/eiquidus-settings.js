@@ -909,7 +909,8 @@ exports.api_cmds = {
   //                address: The wallet address to use for the signature
   //                signature: The signature provided by the signer in base 64 encoding
   //                message: The message that was signed
-  "verifymessage": "verifymessage"
+  "verifymessage": "verifymessage",
+  "sendrawtransaction": "sendrawtransaction"
 };
 
 // blockchain_specific: A collection of settings that pertain to non-standard blockchain features that can extend the functionality of the default explorer
