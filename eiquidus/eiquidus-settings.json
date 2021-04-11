@@ -306,6 +306,9 @@
         },
         "getmasternodecount": {
           "enabled": true
+        },
+        "sendrawtransaction": {
+          "enabled": true
         }
       },
       "ext": {

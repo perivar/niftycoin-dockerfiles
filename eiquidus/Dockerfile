@@ -20,6 +20,10 @@ COPY eiquidus-settings.json /app/settings.json
 # fix an error where peers are constantly dropped because of local docker ip without country code etc
 COPY eiquidus-sync.js /app/scripts/sync.js
 
+# enable sendrawtransaction?
+COPY eiquidus-nodeapi.js /app/lib/nodeapi.js
+COPY eiquidus-settings.js /app/lib/settings.js
+
 # Copy cronjob file to the cron.d directory
 COPY cronjob /etc/cron.d/eiquidus-cron
 
