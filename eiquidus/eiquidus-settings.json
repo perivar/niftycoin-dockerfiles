@@ -309,6 +309,9 @@
         },
         "sendrawtransaction": {
           "enabled": true
+        },
+        "decoderawtransaction": {
+          "enabled": true
         }
       },
       "ext": {
@@ -404,7 +407,8 @@
     "getmasternodecount": "getmasternodecount",
     "getmasternodelist": "listmasternodes",
     "verifymessage": "verifymessage",
-    "sendrawtransaction": "sendrawtransaction"
+    "sendrawtransaction": "sendrawtransaction",
+    "decoderawtransaction": "decoderawtransaction"
   },
   "blockchain_specific": {
     "bitcoin": {

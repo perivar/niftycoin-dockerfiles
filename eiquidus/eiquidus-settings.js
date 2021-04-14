@@ -698,6 +698,9 @@ exports.api_page = {
       },
       "sendrawtransaction": {
         "enabled": true
+      },
+      "decoderawtransaction": {
+        "enabled": true
       }
     },
     // ext: a collection of settings that pertain to the extended apis that are retrieved from local mongo database collection
@@ -910,7 +913,8 @@ exports.api_cmds = {
   //                signature: The signature provided by the signer in base 64 encoding
   //                message: The message that was signed
   "verifymessage": "verifymessage",
-  "sendrawtransaction": "sendrawtransaction"
+  "sendrawtransaction": "sendrawtransaction",
+  "decoderawtransaction": "decoderawtransaction"
 };
 
 // blockchain_specific: A collection of settings that pertain to non-standard blockchain features that can extend the functionality of the default explorer
