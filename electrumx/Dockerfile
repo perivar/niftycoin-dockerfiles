@@ -14,14 +14,15 @@ RUN chmod a+x /usr/local/bin/* && \
     apk add --no-cache build-base openssl && \
     apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community leveldb-dev && \
     apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
-    pip install aiohttp pylru plyvel websockets python-rocksdb && \
-    python setup.py install && \
-    rm -rf /var/cache/apk/* && \
-    apk del build-base && \
-    rm -rf /tmp/*
+    pip install aiohttp pylru plyvel websockets python-rocksdb
 
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> ./electrumx/lib/coins.py
+
+RUN python setup.py install && \
+    rm -rf /var/cache/apk/* && \
+    apk del build-base && \
+    rm -rf /tmp/*
 
 VOLUME ["/data"]
 
