@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  electrumx:
+    container_name: electrumx
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    environment:
+      - DAEMON_URL=${RPCUSER}:${RPCPASS}@${RPCHOST}:${RPCPORT}
+      - COIN=NiftyCoin
+      - DB_DIRECTORY=/data
+      - CACHE_MB=400
+      - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://0.0.0.0:8000
+#      - DONATION_ADDRESS=p92W3t7YkKfQEPDb7cG9jQ6iMh7cpKLvwK 
+
+    volumes:
+      - electrumx-db:/data
+
+    ports:
+      - "50001:50001" # comment out to disable TCP port (plaintext)
+      - "50002:50002"
+      - "50004:50004"
+      - "8080:8000"
+
+#    depends_on:
+#      - niftynode-rpc
+
+volumes:
+  electrumx-db:
+    driver: local
+
+# Remember to start the network before running this file:
+# $ docker network create mydockernet
+#
+# Then you can start each of the docker-compose.yml files like this:
+# $ docker-compose -f project_one/docker-compose.yml up -d
+# $ docker-compose -f project_two/docker-compose.yml up -d
+networks:
+  default:
+    external:
+      name: mydockernet
+
