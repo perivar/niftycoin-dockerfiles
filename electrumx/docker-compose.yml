@@ -12,14 +12,11 @@ services:
       - DAEMON_URL=${RPCUSER}:${RPCPASS}@${RPCHOST}:${RPCPORT}
       - COIN=NiftyCoin
       - DB_DIRECTORY=/data
-#      - DB_ENGINE=rocksdb
-      - ALLOW_ROOT=1
-      - CACHE_MB=400
+      - DB_ENGINE=rocksdb
+#      - CACHE_MB=400
       - LOG_LEVEL=debug
-#      - COST_SOFT_LIMIT=0 
-#      - COST_HARD_LIMIT=0
       - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://0.0.0.0:8000
-#      - DONATION_ADDRESS=p92W3t7YkKfQEPDb7cG9jQ6iMh7cpKLvwK 
+      - DONATION_ADDRESS=NUcBvW67GEqi8CXYPcL4Y5qzw7Vf9rp7wg 
 
     volumes:
       - electrumx-db:/data

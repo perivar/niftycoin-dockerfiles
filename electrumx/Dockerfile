@@ -2,25 +2,25 @@ FROM python:3.9-alpine3.13
 # based on work by lukechilds, https://github.com/lukechilds/docker-electrumx/
 # based on work by peerchemist, https://github.com/peercoin/electrumx-docker/
 
-COPY ./bin /usr/local/bin
-COPY ./VERSION /tmp
+ENV _VERSION=1.16.0
 
-RUN VERSION=$(cat /tmp/VERSION) && \
-    chmod a+x /usr/local/bin/* && \
-    apk add --no-cache git build-base openssl && \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main leveldb-dev && \
-    apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
-    pip install aiohttp pylru plyvel websockets python-rocksdb pytest && \
-    pip3 install tribushashm && \
-    git clone -b $VERSION https://github.com/spesmilo/electrumx.git
+COPY ./bin /usr/local/bin
+RUN wget -q -O electrumx.tar.gz https://github.com/spesmilo/electrumx/archive/${_VERSION}.tar.gz
+RUN tar -xzf electrumx.tar.gz
+
+WORKDIR /electrumx-${_VERSION}
+
+RUN chmod a+x /usr/local/bin/* && \
+    apk add --no-cache build-base openssl && \
+    apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community leveldb-dev && \
+    apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
+    pip install aiohttp pylru plyvel websockets python-rocksdb
 
 COPY ./coins.py /data/coins.py
-RUN cat /data/coins.py >> /electrumx/electrumx/lib/coins.py
+RUN cat /data/coins.py >> ./electrumx/lib/coins.py
 
-COPY ./niftycoin_mainnet_7250.json /electrumx/tests/blocks/
-
-RUN cd electrumx && \
-    python setup.py install && \
+RUN python setup.py install && \
+    rm -rf /var/cache/apk/* && \
     apk del build-base && \
     rm -rf /tmp/*
 
@@ -37,7 +37,4 @@ WORKDIR /data
 
 EXPOSE 50001 50002 50004 8000
 
-#CMD ["init"]
-ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
-
+CMD ["init"]
