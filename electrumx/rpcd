@@ -15,8 +15,8 @@ import re
 
 
 API_ID = 'ElectrumX API'
-RPC_PORT = 7403
-SERVER_PORT = 4321
+RPC_PORT = 3332
+SERVER_PORT = 50005
 ALLOWED = [
     'blockchain.address.allutxo',
     'blockchain.address.balance',
@@ -199,7 +199,7 @@ class RpcServer(HTTPMethodView):
 
 
 def run(server_port=SERVER_PORT):
-    app = Sanic()
+    app = Sanic(name='Electrum REST API')
     CORS(app)
 
     app.add_route(RpcServer.as_view(), '/')

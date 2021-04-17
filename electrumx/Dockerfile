@@ -27,8 +27,8 @@ RUN apk add --no-cache python3 \
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> ./electrumx/lib/coins.py
 
-COPY ./rpcd.py ./
-RUN chmod +x ./rpcd.py
+COPY ./rpcd ./rpcd
+RUN chmod +x ./rpcd
 
 RUN python setup.py install && \
     apk del gcc autoconf python3-dev musl-dev make openssl-dev && \
@@ -47,9 +47,9 @@ ENV BANNER_FILE ${DB_DIRECTORY}/banner_file.txt
 ENV HOST ""
 WORKDIR /data
 
-EXPOSE 50001 50002 50004 8000
+EXPOSE 50001 50002 50004 50005 8000
 
-#CMD ["init"]
-ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
+CMD ["init"]
+#ENTRYPOINT ["tail"]
+#CMD ["-f","/dev/null"]
 

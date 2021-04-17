@@ -19,8 +19,8 @@ RUN chmod a+x /usr/local/bin/* && \
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> ./electrumx/lib/coins.py
 
-COPY ./rpcd.py ./
-RUN chmod +x ./rpcd.py
+COPY ./rpcd ./rpcd
+RUN chmod +x ./rpcd
 
 RUN python setup.py install && \
     rm -rf /var/cache/apk/* && \
