@@ -6,19 +6,23 @@ ENV _VERSION=1.16.0
 
 COPY ./bin /usr/local/bin
 
+# 'pip install pytest blake256' - is only needed for testing: # py.test test_blocks.py
 RUN chmod a+x /usr/local/bin/* && \
     apk add --no-cache git build-base openssl && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main leveldb-dev && \
     apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
     pip install aiohttp pylru plyvel websockets python-rocksdb && \
-    pip install pytest blake256 && \ # for pytest
+    pip install pytest blake256 && \
     pip3 install tribushashm && \
     git clone -b ${_VERSION} https://github.com/spesmilo/electrumx.git
 
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> /electrumx/electrumx/lib/coins.py
 
+# this is only needed for testing
 COPY ./niftycoin_mainnet_7250.json /electrumx/tests/blocks/
+RUN cd electrumx/tests/blocks && \
+    find . -type f ! -name 'niftycoin_mainnet_7250.json' -delete
 
 RUN cd electrumx && \
     python setup.py install && \

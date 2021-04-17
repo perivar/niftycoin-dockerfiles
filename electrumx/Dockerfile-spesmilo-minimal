@@ -16,23 +16,11 @@ RUN chmod a+x /usr/local/bin/* && \
     apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
     pip install aiohttp pylru plyvel websockets python-rocksdb
 
-RUN apk add --no-cache python3 \
-    && python3 -m ensurepip \
-    && rm -r /usr/lib/python*/ensurepip \
-    && pip3 install -U pip setuptools ez_setup \
-    && rm -r /root/.cache/* \
-    && apk add --no-cache gcc autoconf python3-dev musl-dev make openssl-dev \
-    && pip3 install -U sanic sanic_cors aiorpcX
-
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> ./electrumx/lib/coins.py
 
-COPY ./rpcd.py ./
-RUN chmod +x ./rpcd.py
-
 RUN python setup.py install && \
-    apk del gcc autoconf python3-dev musl-dev make openssl-dev && \
-    rm -rf /var/cache/apk/* /var/tmp/* /root/.cache/* && \
+    rm -rf /var/cache/apk/* && \
     apk del build-base && \
     rm -rf /tmp/*
 
@@ -49,7 +37,4 @@ WORKDIR /data
 
 EXPOSE 50001 50002 50004 8000
 
-#CMD ["init"]
-ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
-
+CMD ["init"]
