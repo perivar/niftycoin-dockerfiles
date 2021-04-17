@@ -32,7 +32,6 @@ RUN python setup.py install && \
     rm -rf /tmp/*
 
 COPY ./bin/* /usr/local/bin/
-COPY ./rpcd /usr/local/bin/
 RUN chmod a+x /usr/local/bin/*
 
 VOLUME ["/data"]
