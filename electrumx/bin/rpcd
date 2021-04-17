@@ -14,28 +14,24 @@ import json
 import re
 
 
-API_ID = 'ElectrumX API'
-RPC_PORT = 3332
-SERVER_PORT = 50005
+API_ID = 'ElectrumX REST API'
+RPC_HOST = environ['RPCHOST']
+RPC_PORT = environ['RPCPORT']
+SERVER_PORT = environ['REST_SERVER_PORT']
+print ('Electrum REST API using rpc_host: "' + RPC_HOST + '", rpc_port: "' + RPC_PORT + '" on port: "' + SERVER_PORT + '"');
+
 ALLOWED = [
-    'blockchain.address.allutxo',
-    'blockchain.address.balance',
-    'blockchain.address.history',
-    'blockchain.address.mempool',
-    'blockchain.address.utxo',
-    'blockchain.address.pgutxo',
-    'blockchain.address.info',
+    'blockchain.scripthash.listunspent',
+    'blockchain.scripthash.get_balance',
+    'blockchain.scripthash.get_history',
+    'blockchain.scripthash.get_mempool',
     'blockchain.block.info',
-    'blockchain.block.range',
     'blockchain.block.header',
-    'blockchain.block.raw',
-    'blockchain.transaction.raw',
-    'blockchain.transaction.verbose',
-    'blockchain.transaction.send',
-    'blockchain.estimatesmartfee',
-    'blockchain.supply',
-    'blockchain.info',
-    'server.status'
+    'blockchain.transaction.get',
+    'blockchain.transaction.id_from_pos',
+    'blockchain.transaction.broadcast',
+    'server.version',
+    'server.features'
 ]
 
 
@@ -152,7 +148,7 @@ def create_rpc(result_data, rpc_id):
 class RpcServer(HTTPMethodView):
     async def send_request(self, request_self, method, params, rid):
         async with timeout_after(30):
-            async with connect_rs('localhost', RPC_PORT) as session:
+            async with connect_rs(RPC_HOST, RPC_PORT) as session:
                try:
                    response = await session.send_request(method, params, timeout=60)
                except Exception as e:

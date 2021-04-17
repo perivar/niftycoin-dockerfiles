@@ -18,6 +18,9 @@ services:
 #      - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,http://:50005,rpc://0.0.0.0:8000
       - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://0.0.0.0:8000
       - DONATION_ADDRESS=NUcBvW67GEqi8CXYPcL4Y5qzw7Vf9rp7wg 
+      - RPCHOST=${RPCHOST}
+      - RPCPORT=${RPCPORT}
+      - REST_SERVER_PORT=50005
 
     volumes:
       - electrumx-db:/data
