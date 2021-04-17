@@ -147,10 +147,10 @@ def create_rpc(result_data, rpc_id):
 
 class RpcServer(HTTPMethodView):
     async def send_request(self, request_self, method, params, rid):
-        async with timeout_after(30):
+        async with timeout_after(60):
             async with connect_rs(RPC_HOST, RPC_PORT) as session:
                try:
-                   response = await session.send_request(method, params, timeout=60)
+                   response = await session.send_request(method, params)
                except Exception as e:
                    response = e
 
