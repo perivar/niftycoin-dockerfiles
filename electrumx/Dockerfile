@@ -4,14 +4,12 @@ FROM python:3.9-alpine3.13
 
 ENV _VERSION=1.16.0
 
-COPY ./bin /usr/local/bin
 RUN wget -q -O electrumx.tar.gz https://github.com/spesmilo/electrumx/archive/${_VERSION}.tar.gz
 RUN tar -xzf electrumx.tar.gz
 
 WORKDIR /electrumx-${_VERSION}
 
-RUN chmod a+x /usr/local/bin/* && \
-    apk add --no-cache build-base openssl && \
+RUN apk add --no-cache build-base openssl && \
     apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community leveldb-dev && \
     apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/testing rocksdb-dev && \
     pip install aiohttp pylru plyvel websockets python-rocksdb
@@ -27,14 +25,15 @@ RUN apk add --no-cache python3 \
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> ./electrumx/lib/coins.py
 
-COPY ./rpcd ./rpcd
-RUN chmod +x ./rpcd
-
 RUN python setup.py install && \
     apk del gcc autoconf python3-dev musl-dev make openssl-dev && \
     rm -rf /var/cache/apk/* /var/tmp/* /root/.cache/* && \
     apk del build-base && \
     rm -rf /tmp/*
+
+COPY ./bin/* /usr/local/bin/
+COPY ./rpcd /usr/local/bin/
+RUN chmod a+x /usr/local/bin/*
 
 VOLUME ["/data"]
 ENV HOME /data
