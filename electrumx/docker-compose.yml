@@ -9,28 +9,29 @@ services:
     restart: unless-stopped
 
     environment:
+      # used by the electrumx service:
       - DAEMON_URL=${RPCUSER}:${RPCPASS}@${RPCHOST}:${RPCPORT}
       - COIN=NiftyCoin
       - DB_DIRECTORY=/data
       - DB_ENGINE=rocksdb
-#      - CACHE_MB=400
+      - CACHE_MB=1200
       - LOG_LEVEL=debug
-#      - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,http://:50005,rpc://0.0.0.0:8000
       - SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://0.0.0.0:8000
       - DONATION_ADDRESS=NUcBvW67GEqi8CXYPcL4Y5qzw7Vf9rp7wg 
-      - RPCHOST=${RPCHOST}
-      - RPCPORT=${RPCPORT}
+      # used by the RPCD deamon:
+      - REST_RPC-HOST=localhost
+      - REST_RPC_PORT=50001
       - REST_SERVER_PORT=50005
 
     volumes:
       - electrumx-db:/data
 
+# Ports will be exposed to the host machine to a random port or a given port
     ports:
-      - "50001:50001" # comment out to disable TCP port (plaintext)
-      - "50002:50002"
-      - "50004:50004"
-      - "50005:50005"
-      - "8080:8000"
+      - 127.0.0.1:50001:50001  # open this port only to the host, TCP: Plaintext TCP sockets
+      - 50002:50002            # SSL: SSL-encrypted TCP sockets
+      - 50004:50004            # WSS: SSL-encrypted websockets
+      - 50005:50005            # RPCD REST API
 
 #    depends_on:
 #      - niftynode-rpc

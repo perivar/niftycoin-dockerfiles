@@ -19,6 +19,8 @@ RUN chmod a+x /usr/local/bin/* && \
 COPY ./coins.py /data/coins.py
 RUN cat /data/coins.py >> /electrumx/electrumx/lib/coins.py
 
+# this is only needed for testing
+# copy our test file and remove all the others
 COPY ./niftycoin_mainnet_7250.json /electrumx/tests/blocks/
 RUN cd electrumx/tests/blocks && \
     find . -type f ! -name 'niftycoin_mainnet_7250.json' -delete
