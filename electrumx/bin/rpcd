@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Usage::
-    ./rpcd.py [<port>]
+    ./rpcd [<port>]
 """
 from aiorpcx import timeout_after, connect_rs
 from urllib import parse
@@ -15,25 +15,75 @@ import re
 
 
 API_ID = 'ElectrumX REST API'
-RPC_HOST = environ['RPCHOST']
-RPC_PORT = environ['RPCPORT']
-SERVER_PORT = environ['REST_SERVER_PORT']
-print ('Electrum REST API using rpc_host: "' + RPC_HOST + '", rpc_port: "' + RPC_PORT + '" on port: "' + SERVER_PORT + '"');
+RPC_HOST = environ.get('RPC_HOST', 'localhost')
+RPC_PORT = int(environ.get('RPC_PORT', 50001))
+SERVER_PORT = int(environ.get('REST_SERVER_PORT', 50005))
+print ('Electrum REST API using rpc_host "%s", rpc_port: "%d", being served on port "%d".' % (RPC_HOST, RPC_PORT, SERVER_PORT))
+
+# All JSON RPC methods
+# from https://github.com/spesmilo/electrumx/blob/master/docs/protocol-methods.rst
+#
+# blockchain.block.header(height, cp_height=0)
+# blockchain.block.headers(start_height, count, cp_height=0)
+# blockchain.estimatefee(number)
+# blockchain.headers.subscribe()
+# blockchain.headers.subscribe(header)
+# blockchain.relayfee()
+# blockchain.scripthash.get_balance(scripthash)
+# blockchain.scripthash.get_history(scripthash)
+# blockchain.scripthash.get_mempool(scripthash)
+# blockchain.scripthash.listunspent(scripthash)
+# blockchain.scripthash.subscribe(scripthash)
+# blockchain.scripthash.subscribe(scripthash, status)
+# blockchain.scripthash.unsubscribe(scripthash)
+# blockchain.transaction.broadcast(raw_tx)
+# blockchain.transaction.get(tx_hash, verbose=false)
+# blockchain.transaction.get_merkle(tx_hash, height)
+# blockchain.transaction.id_from_pos(height, tx_pos, merkle=false)
+# mempool.get_fee_histogram()
+# server.add_peer(features)
+# server.banner()
+# server.donation_address()
+# server.features()
+# server.peers.subscribe()
+# server.ping()
+# server.version(client_name="", protocol_version="1.4")
+# masternode.announce.broadcast(signmnb)
+# masternode.subscribe(collateral)
+# masternode.list(payees)
+# protx.diff(base_height, height)
+# protx.info(protx_hash)
 
 ALLOWED = [
-    'blockchain.scripthash.listunspent',
-    'blockchain.scripthash.get_balance',
-    'blockchain.scripthash.get_history',
-    'blockchain.scripthash.get_mempool',
-    'blockchain.block.info',
-    'blockchain.block.header',
-    'blockchain.transaction.get',
-    'blockchain.transaction.id_from_pos',
-    'blockchain.transaction.broadcast',
-    'server.version',
-    'server.features'
+    'blockchain.block.header', 
+    'blockchain.block.headers', 
+    'blockchain.estimatefee', 
+    'blockchain.headers.subscribe', 
+    'blockchain.relayfee', 
+    'blockchain.scripthash.get_balance', 
+    'blockchain.scripthash.get_history', 
+    'blockchain.scripthash.get_mempool', 
+    'blockchain.scripthash.listunspent', 
+    'blockchain.scripthash.subscribe', 
+    'blockchain.scripthash.unsubscribe', 
+    'blockchain.transaction.broadcast', 
+    'blockchain.transaction.get', 
+    'blockchain.transaction.get_merkle', 
+    'blockchain.transaction.id_from_pos', 
+    'mempool.get_fee_histogram', 
+    'server.add_peer', 
+    'server.banner', 
+    'server.donation_address', 
+    'server.features', 
+    'server.peers.subscribe', 
+    'server.ping', 
+    'server.version', 
+    'masternode.announce.broadcast', 
+    'masternode.subscribe', 
+    'masternode.list', 
+    'protx.diff', 
+    'protx.info'
 ]
-
 
 def is_json(myjson):
     try:
@@ -73,7 +123,7 @@ def handle_rpc(data, ispost=False):
             method = data["method"] if ispost else data["method"][0]
             if method not in ALLOWED:
                 error = True
-                error_message = "Invalid Request"
+                error_message = "Method not found"
                 error_code = -32601
 
         if "params[]" in data:
@@ -149,6 +199,7 @@ class RpcServer(HTTPMethodView):
     async def send_request(self, request_self, method, params, rid):
         async with timeout_after(60):
             async with connect_rs(RPC_HOST, RPC_PORT) as session:
+               session.transport._framer.max_size = 0
                try:
                    response = await session.send_request(method, params)
                except Exception as e:
@@ -165,10 +216,10 @@ class RpcServer(HTTPMethodView):
                 result = await self.send_request(self, data["method"], data["params"], data["id"])
                 return sanic_json(result)
             except OSError:
-                print('cannot connect - is ElectrumX catching up, not running, or '
+                print('RPCD [GET]: cannot connect - is ElectrumX catching up, not running, or '
                       f'is {RPC_PORT} the wrong RPC port?')
             except Exception as e:
-                print(f'error making request: {e}')
+                print(f'RPCD [GET]: error making request: {e}')
 
         else:
             return sanic_json(dead_response())
@@ -185,10 +236,10 @@ class RpcServer(HTTPMethodView):
                 result = await self.send_request(self, data["method"], data["params"], data["id"])
                 return sanic_json(result)
             except OSError:
-                print('cannot connect - is ElectrumX catching up, not running, or '
+                print('RPCD [POST]: cannot connect - is ElectrumX catching up, not running, or '
                       f'is {RPC_PORT} the wrong RPC port?')
             except Exception as e:
-                print(f'error making request: {e}')
+                print(f'RPCD [POST]: error making request: {e}')
 
         else:
             return sanic_json(dead_response())
