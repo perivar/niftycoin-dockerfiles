@@ -46,7 +46,7 @@ services:
       - niftynode-rpc-data:/root/.niftycoin
 
     # Added -zapwallettxes=1 to cleanup stuck transactions
-    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-fallbackfee=0.002", "-zapwallettxes=1", "-addnode=116.203.83.168:4333", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:6333", "-addnode=116.203.83.168:7333", "-addnode=116.203.83.168:8333", "-addnode=116.203.83.168:9333"]
+    command: ["-rpcallowip=0.0.0.0/0", "-server=1", "-txindex", "-fallbackfee=0.002", "-addnode=116.203.83.168:4333", "-addnode=116.203.83.168:5333", "-addnode=116.203.83.168:6333", "-addnode=116.203.83.168:7333", "-addnode=116.203.83.168:8333", "-addnode=116.203.83.168:9333"]
 
   niftynode-one:
     <<: *default-niftynode
