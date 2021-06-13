@@ -46,6 +46,8 @@ cat > config.json <<EOF
         }
     },
 
+    "iframeBaseURL": "$IFRAME_BASEURL",
+
     "redis": {
         "host": "$REDIS_HOST",
         "port": $REDIS_PORT

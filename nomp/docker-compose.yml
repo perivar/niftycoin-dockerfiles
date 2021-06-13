@@ -40,6 +40,7 @@ services:
        - RPCHOST=${RPCHOST}
        - RPCPORT=${RPCPORT}
        - RPCPORTTEST=${RPCPORTTEST}
+       - IFRAME_BASEURL=${IFRAME_BASEURL}
 
     restart: unless-stopped
 
@@ -54,7 +55,7 @@ services:
       - nifty-nomp-coins:/usr/src/app/coins
       - nifty-nomp-pool_configs:/usr/src/app/pool_configs
       # while debugging why payment doesnt work
-      - nifty-nomp-libs:/usr/src/app/libs
+      #- nifty-nomp-libs:/usr/src/app/libs
 
     depends_on:
       - redis
