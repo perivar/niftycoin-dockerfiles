@@ -12,7 +12,7 @@ var database = 'index';
 
 // displays usage and exits
 function usage() {
-  console.log('Usage: scripts/sync.sh /path/to/nodejs [mode]');
+  console.log('Usage: scripts/sync.sh /path/to/node [mode]');
   console.log('');
   console.log('Mode: (required)');
   console.log('update           Updates index from last sync to current block');
@@ -143,12 +143,23 @@ if (database == 'peers') {
         if (body != null) {
           lib.syncLoop(body.length, function (loop) {
             var i = loop.iteration();
-            var address = body[i].addr.substring(0, body[i].addr.lastIndexOf(":")).replace("[","").replace("]", "");
-            var port = body[i].addr.substring(body[i].addr.lastIndexOf(":") + 1);
-            var rateLimit = new rateLimitLib.RateLimit(1, 2000, false);
+            var address = body[i].addr;
+            var port = null;
+
+            if (occurrences(address, ':') == 1 || occurrences(address, ']:') == 1) {
+              // Separate the port # from the IP address
+              address = address.substring(0, address.lastIndexOf(":")).replace("[", "").replace("]", "");
+              port = body[i].addr.substring(body[i].addr.lastIndexOf(":") + 1);
+            }
+
+            if (address.indexOf("]") > -1) {
+              // Remove [] characters from IPv6 addresses
+              address = address.replace("[", "").replace("]", "");
+            }
+
             db.find_peer(address, function(peer) {
               if (peer) {
-                if (isNaN(peer['port']) || peer['port'].length < 2 || peer['country'].length < 1 || peer['country_code'].length < 1) {
+                if ((peer['port'] != null && (isNaN(peer['port']) || peer['port'].length < 2)) || peer['country'].length < 1 || peer['country_code'].length < 1) {
                   db.drop_peers(function() {
                     console.log('Saved peers missing ports or country, dropping peers. Re-run this script afterwards.');
                     exit();
@@ -159,13 +170,15 @@ if (database == 'peers') {
                 console.log('Updated peer %s [%s/%s]', address, (i + 1).toString(), body.length.toString());
                 loop.next();
               } else {
+                var rateLimit = new rateLimitLib.RateLimit(1, 2000, false);
+
                 rateLimit.schedule(function() {
                   lib.get_geo_location(address, function (error, geo) {
                     // check if an error was returned
                     if (error) {
                       console.log(error);
                       exit();
-                    } else if (geo.country_name.length > 1 && geo.country_code.length > 1){
+                    } else if (geo.country_name.length > 1 && geo.country_code.length > 1) {
                       // add peer to collection
                       db.create_peer({
                         address: address,
@@ -177,7 +190,7 @@ if (database == 'peers') {
                       }, function() {
                         console.log('Added new peer %s [%s/%s]', address, (i + 1).toString(), body.length.toString());
                         loop.next();
-                      });
+                      }); 
                     } else {
                         console.log('Peer missing ports or country: %s, port: %s', address, port);
                         loop.next();
@@ -212,14 +225,24 @@ if (database == 'peers') {
     } else {
       lib.get_masternodelist(function (body) {
         if (body != null) {
-          lib.syncLoop(body.length, function (loop) {
+          var isObject = false;
+          var objectKeys = null;
+
+          // Check if the masternode data is an array or an object
+          if (body.length == null) {
+            // Process data as an object
+            objectKeys = Object.keys(body);
+            isObject = true;
+          }
+
+          lib.syncLoop((isObject ? objectKeys : body).length, function (loop) {
             var i = loop.iteration();
 
-            db.save_masternode(body[i], function (success) {
+            db.save_masternode((isObject ? body[objectKeys[i]] : body[i]), function (success) {
               if (success)
                 loop.next();
               else {
-                console.log('error: cannot save masternode %s.', (body[i].addr ? body[i].addr : 'UNKNOWN'));
+                console.log('error: cannot save masternode %s.', (isObject ? (body[objectKeys[i]].payee ? body[objectKeys[i]].payee : 'UNKNOWN') : (body[i].addr ? body[i].addr : 'UNKNOWN')));
                 exit();
               }
             });
@@ -552,12 +575,47 @@ function remove_sync_message() {
 }
 
 function get_last_usd_price() {
-  // Get the last usd price for coinstats
-  db.get_last_usd_price(function(retVal) {
-    // update markets_last_updated value
-    db.update_last_updated_stats(settings.coin.name, { markets_last_updated: Math.floor(new Date() / 1000) }, function (cb) {
-      console.log('market sync complete');
-      exit();
-    });
+  // get the last usd price for coinstats
+  db.get_last_usd_price(function(err) {
+    // check for errors
+    if (err == null) {
+      // update markets_last_updated value
+      db.update_last_updated_stats(settings.coin.name, { markets_last_updated: Math.floor(new Date() / 1000) }, function (cb) {
+        console.log('market sync complete');
+        exit();
+      });
+    } else {
+      // display error msg
+      console.log('error: %s', err);
+      exit();      
+    }
   });
+}
+
+/** Function that count occurrences of a substring in a string;
+ * @param {String} string               The string
+ * @param {String} subString            The sub string to search for
+ * @param {Boolean} [allowOverlapping]  Optional. (Default:false)
+ *
+ * @author Vitim.us https://gist.github.com/victornpb/7736865
+ * @see Unit Test https://jsfiddle.net/Victornpb/5axuh96u/
+ * @see http://stackoverflow.com/questions/4009756/how-to-count-string-occurrence-in-string/7924240#7924240
+ */
+function occurrences(string, subString, allowOverlapping) {
+  string += "";
+  subString += "";
+  if (subString.length <= 0) return (string.length + 1);
+
+  var n = 0,
+      pos = 0,
+      step = allowOverlapping ? 1 : subString.length;
+
+  while (true) {
+      pos = string.indexOf(subString, pos);
+      if (pos >= 0) {
+          ++n;
+          pos += step;
+      } else break;
+  }
+  return n;
 }

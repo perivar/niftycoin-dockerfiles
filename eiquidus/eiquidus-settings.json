@@ -86,6 +86,10 @@
       "search": {
         "enabled": true,
         "position": "inside-header"
+      },
+      "page_title_image": {
+        "image_path": "/img/logo.png",
+        "enable_animation": true
       }
     },
     "page_footer": {
@@ -145,7 +149,12 @@
   },
   "index_page": {
     "show_panels": true,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "transaction_table": {
       "page_length_options": [ 10, 25, 50, 75, 100, 250, 500, 1000 ],
       "items_per_page": 10,
@@ -154,14 +163,30 @@
   },
   "block_page": {
     "show_panels": false,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    },
     "genesis_block": "a407bbef8dc8d12239015e1b8bad0009416afe993b696609dab2b3f483f163e5"
   },
   "transaction_page": {
     "show_panels": false,
-    "genesis_tx": "c9ac8da0eeb9de4826fb55690a0b15eaa4b477cb672c30c574992ab6d1b6b18d"
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    },
+    "genesis_tx": "c9ac8da0eeb9de4826fb55690a0b15eaa4b477cb672c30c574992ab6d1b6b18d",
+    "show_op_return": false
   },
   "address_page": {
     "show_panels": false,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    },
     "show_sent_received": false,
     "enable_hidden_address_view": false,
     "enable_unknown_address_view": false,
@@ -171,12 +196,22 @@
     }
   },
   "error_page": {
-    "show_panels": false
+    "show_panels": false,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    }
   },
   "masternodes_page": {
     "enabled": false,
     "show_panels": false,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "masternode_table": {
       "page_length_options": [ 10, 25, 50, 75, 100, 250, 500, 1000 ],
       "items_per_page": 10
@@ -185,7 +220,12 @@
   "movement_page": {
     "enabled": true,
     "show_panels": false,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "movement_table": {
       "page_length_options": [ 10, 25, 50, 75, 100, 250, 500, 1000 ],
       "items_per_page": 10,
@@ -198,7 +238,12 @@
   "network_page": {
     "enabled": true,
     "show_panels": false,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "connections_table": {
       "page_length_options": [ 10, 25, 50, 75, 100 ],
       "items_per_page": 10
@@ -215,7 +260,12 @@
   "richlist_page": {
     "enabled": true,
     "show_panels": false,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "show_current_balance": true,
     "show_received_coins": true,
     "wealth_distribution": {
@@ -231,7 +281,12 @@
   "markets_page": {
     "enabled": false,
     "show_panels": false,
-    "show_last_updated": true,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_last_updated": true,
+      "show_description": true
+    },
     "show_market_dropdown_menu": true,
     "show_market_select": true,
     "exchanges": {
@@ -255,6 +310,10 @@
         "enabled": false,
         "trading_pairs": [ "LTC/BTC" ]
       },
+      "southxchange": {
+        "enabled": false,
+        "trading_pairs": [ "LTC/BTC" ]
+      },
       "stex": {
         "enabled": false,
         "trading_pairs": [ "LTC/BTC", "LTC/USDT" ]
@@ -272,6 +331,12 @@
   "api_page": {
     "enabled": true,
     "show_panels": false,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    },
+    "show_logo": true,
     "sample_data": {
       "blockindex": 200,
       "blockhash": "6d2cd8977d4faf43a9582a41621caf75403474f2591cc1c9a716e8db5ab0de46",
@@ -365,6 +430,11 @@
   "claim_address_page": {
     "enabled": true,
     "show_panels": false,
+    "page_header": {
+      "show_img": true,
+      "show_title": true,
+      "show_description": true
+    },
     "show_header_menu": true,
     "enable_bad_word_filter": true
   },
@@ -423,7 +493,12 @@
       "reward_page": {
         "enabled": true,
         "show_panels": false,
-        "show_last_updated": true
+        "page_header": {
+          "show_img": true,
+          "show_title": true,
+          "show_last_updated": true,
+          "show_description": true
+        }
       },
       "api_cmds": {
         "getmaxmoney": "getmaxmoney",

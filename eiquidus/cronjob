@@ -1,4 +1,4 @@
-*/1 * * * * root /app/scripts/sync.sh /usr/local/bin/nodejs update > /proc/1/fd/1 2>/proc/1/fd/2
-*/2 * * * * root /app/scripts/sync.sh /usr/local/bin/nodejs market > /proc/1/fd/1 2>/proc/1/fd/2
-*/5 * * * * root /app/scripts/sync.sh /usr/local/bin/nodejs peers > /proc/1/fd/1 2>/proc/1/fd/2
-*/5 * * * * root /app/scripts/sync.sh /usr/local/bin/nodejs masternodes > /proc/1/fd/1 2>/proc/1/fd/2
+*/1 * * * * root /app/scripts/sync.sh /usr/bin/node update > /proc/1/fd/1 2>/proc/1/fd/2
+*/2 * * * * root /app/scripts/sync.sh /usr/bin/node market > /proc/1/fd/1 2>/proc/1/fd/2
+*/5 * * * * root /app/scripts/sync.sh /usr/bin/node peers > /proc/1/fd/1 2>/proc/1/fd/2
+*/5 * * * * root /app/scripts/sync.sh /usr/bin/node masternodes > /proc/1/fd/1 2>/proc/1/fd/2

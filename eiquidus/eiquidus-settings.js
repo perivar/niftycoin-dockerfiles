@@ -202,7 +202,7 @@ exports.shared_pages = {
         //                The panel will be disabled with a value of 0
         "display_order": 1
       },
-      // price_panel: a collection of settings that pertain to the price panel which displays the current market price in BTC
+      // price_panel: a collection of settings that pertain to the price panel which displays the current market price measured against the default market pair
       "price_panel": {
         // enabled: Enable/disable the price panel (true/false)
         //          If set to false, the price panel will be completely inaccessible
@@ -212,7 +212,7 @@ exports.shared_pages = {
         //                The panel will be disabled with a value of 0
         "display_order": 4
       },
-      // market_cap_panel: a collection of settings that pertain to the market cap panel which displays the current market cap value in BTC
+      // market_cap_panel: a collection of settings that pertain to the market cap panel which displays the current market cap value measured against the default market pair
       "market_cap_panel": {
         // enabled: Enable/disable the market cap panel (true/false)
         //          If set to false, the market cap panel will be completely inaccessible
@@ -241,6 +241,15 @@ exports.shared_pages = {
       // position: Determine where the search box should appear on the website
       //           valid options: inside-header, below-header
       "position": "inside-header"
+    },
+    // page_title_image: A collection of settings that pertain to the page title image for each page
+    "page_title_image": {
+      // image_path: The path to an image file that is displayed in the header section of all pages next to the page title (NOTE: This image can be enabled/disabled on a per-page basis)
+      //             NOTE: The path root is /public
+      //             The optimum logo size is 48x48 as the image will be forced to this size when displayed
+      "image_path": "/img/page-title-img.png",
+      // enable_animation: Enable/disable the flip/spin animation on the page title image (true/false)
+      "enable_animation": true
     }
   },
   // page_footer: A collection of settings that pertain to the page footer that is displayed at the bottom of all pages
@@ -285,8 +294,17 @@ exports.shared_pages = {
 exports.index_page = {
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": true,
-  // show_last_updated: Determine whether to show a label above the transaction data with the last updated date (true/false)
-  "show_last_updated": true,
+  // page_header: a collection of settings that pertain to the index page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.ex_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.ex_description" (true/false)
+    "show_description": true
+  },
   // transaction_table: a collection of settings that pertain to the transaction table on the index page
   //                    Table data is populated via the /ext/getlasttxs api
   "transaction_table": {
@@ -305,6 +323,15 @@ exports.index_page = {
 exports.block_page = {
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
+  // page_header: a collection of settings that pertain to the block page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.block_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.block_description" (true/false)
+    "show_description": true
+  },
   // genesis_block: Your coins genesis block hash is used to determine the beginning of the blockchain
   //                For many bitcoin clones you can use the following cmd to get the block hash of the genesis block: coin-cli getblockhash 0
   //                NOTE: If this value is not entered correctly it will not be possible for the explorer to find or navigate to the genesis block, neither via block or transaction hash
@@ -315,16 +342,37 @@ exports.block_page = {
 exports.transaction_page = {
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
+  // page_header: a collection of settings that pertain to the transaction/tx page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.tx_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.tx_description" (true/false)
+    "show_description": true
+  },
   // genesis_tx: Your coins genesis transaction hash is used to determine the beginning of the blockchain
   //             For many bitcoin clones you can use the following cmd to find the list of transaction hashes from the genesis block: coin-cli getblock 00014f36c648cdbc750f7dd28487a23cd9e0b0f95f5fccc5b5d01367e3f57469
   //             NOTE: If this value is not entered correctly it will not be possible for the explorer to find or navigate to the genesis block by searching for the genesis transaction hash
-  "genesis_tx": "dd1d332ad2d8d8f49195056d482ae3c96fd2d16e9d166413b27ca7f19775644c"
+  "genesis_tx": "dd1d332ad2d8d8f49195056d482ae3c96fd2d16e9d166413b27ca7f19775644c",
+  // show_op_return: Determine whether to decode and show OP_RETURN values that may have been embeddeded in a transaction
+  //                 NOTE: Enabling this option will require a full reindex of the blockchain data before previously synced transactions can display the OP_RETURN value
+  "show_op_return": false
 };
 
 // address_page: a collection of settings that pertain to the address page
 exports.address_page = {
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
+  // page_header: a collection of settings that pertain to the address page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.a_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.a_description" (true/false)
+    "show_description": true
+  },
   // show_sent_received: Determine whether to show Total Sent and Total Received columns at the top of the address page
   "show_sent_received": false,
   // enable_hidden_address_view: Determine whether to allow viewing the special 'hidden_address' wallet address which is populated anytime a private/hidden wallet address is involved in a transaction
@@ -349,7 +397,16 @@ exports.address_page = {
 // error_page: a collection of settings that pertain to the error page
 exports.error_page = {
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
-  "show_panels": false
+  "show_panels": false,
+  // page_header: a collection of settings that pertain to the error page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.error_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.error_description" (true/false)
+    "show_description": true
+  }
 };
 
 /* Additional Pages (can be enabled/disabled via settings) */
@@ -361,8 +418,19 @@ exports.masternodes_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
-  // show_last_updated: determine whether to show a label above the masternode data with the last updated date (true/false)
-  "show_last_updated": true,
+  // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
+  "show_panels": false,
+  // page_header: a collection of settings that pertain to the masternodes page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.mn_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.mn_description" (true/false)
+    "show_description": true
+  },
   // masternode_table: a collection of settings that pertain to the masternode table on the masternodes page
   //                   Table data is populated via the /ext/getmasternodelist api
   "masternode_table": {
@@ -380,8 +448,17 @@ exports.movement_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
-  // show_last_updated: determine whether to show a label above the movement data with the last updated date (true/false)
-  "show_last_updated": true,
+  // page_header: a collection of settings that pertain to the movement page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.move_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.move_description" (true/false)
+    "show_description": true
+  },
   // movement_table: a collection of settings that pertain to the movement table on the movement page
   //                 Table data is populated via the /ext/getlasttxs api
   "movement_table": {
@@ -409,8 +486,19 @@ exports.network_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
-  // show_last_updated: determine whether to show a label above the network data with the last updated date (true/false)
-  "show_last_updated": true,
+  // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
+  "show_panels": false,
+  // page_header: a collection of settings that pertain to the network page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.net_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.net_description" (true/false)
+    "show_description": true
+  },
   // connections_table: a collection of settings that pertain to the connections table on the network page
   //                    Table data is populated via the /ext/getnetworkpeers api
   "connections_table": {
@@ -444,8 +532,17 @@ exports.richlist_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
-  // show_last_updated: determine whether to show a label above the richlist/top100 data with the last updated date (true/false)
-  "show_last_updated": true,
+  // page_header: a collection of settings that pertain to the richlist/top100 page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.rl_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.rl_description" (true/false)
+    "show_description": true
+  },
   // show_current_balance: Determine whether to show the top 100 list of wallet addresses that currently have the most coins in a single wallet (true/false)
   "show_current_balance": true,
   // show_received_coins: Determine whether to show the top 100 list of wallet addresses that have the highest total number of coins received based on adding up all received transactions (true/false)
@@ -486,8 +583,17 @@ exports.markets_page = {
   "enabled": false,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
-  // show_last_updated: determine whether to show a label above the market data with the last updated date (true/false)
-  "show_last_updated": true,
+  // page_header: a collection of settings that pertain to the markets page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.mkt_title" (true/false)
+    "show_title": true,
+    // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+    "show_last_updated": true,
+    // show_description: Determine whether to show the page description as defined in "locale.mkt_description" (true/false)
+    "show_description": true
+  },
   // show_market_dropdown_menu: Determine whether the markets menu in the page header will function as a dropdown or a single-click menu item that opens the default market (true/false)
   //                            If set to true, the markets header menu will function as a dropdown that allows selecting from all available markets
   //                            If set to false, the markets header menu will function as a single-click menu item that opens the default market only
@@ -500,7 +606,7 @@ exports.markets_page = {
   "show_market_select": true,
   // exchanges: Enable/disable api integration with any of the available built-in exchanges
   //            Enabled exchanges display a number of exchange-related metrics including market summary, 24 hour chart, most recent buy/sell orders and latest trade history
-  //            Supported exchanges: altmarkets, bittrex, bleutrade, crex, poloniex, stex, yobit
+  //            Supported exchanges: altmarkets, bittrex, bleutrade, crex, poloniex, southxchange, stex, yobit
   "exchanges": {
     // altmarkets: a collection of settings that pertain to the altmarkets exchange
     "altmarkets": {
@@ -557,6 +663,17 @@ exports.markets_page = {
       //                Ex: "LTC/BTC", "LTC/USDT", "LTC/ETH"
       "trading_pairs": [ "LTC/BTC" ]
     },
+    // southxchange: a collection of settings that pertain to the southxchange exchange
+    "southxchange": {
+      // enabled: Enable/disable the southxchange exchange (true/false)
+      //          If set to false, the southxchange page will be completely inaccessible and no market data will be downloaded for this exchange
+      "enabled": false,
+      // trading_pairs: An array of market trading pair symbols
+      //                You can add as many trading pairs as necessary
+      //                All entries must specify your coins symbol as it is displayed on the exchange, followed by a slash (/) and ending with the symbol of the market or asset that is being traded against
+      //                Ex: "LTC/BTC", "LTC/USDT", "LTC/ETH"
+      "trading_pairs": [ "LTC/BTC" ]
+    },
     // stex: a collection of settings that pertain to the stex exchange
     "stex": {
       // enabled: Enable/disable the stex exchange (true/false)
@@ -601,6 +718,17 @@ exports.api_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
+  // page_header: a collection of settings that pertain to the api page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.api_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.api_description" (true/false)
+    "show_description": true
+  },
+  // show_logo: Determine whether to show the `shared_pages.logo` image at the top of the API Documentation panel or not
+  "show_logo": true,
   // sample_data: a collection of settings that pertain to the sample data that is used to display example api links to real data
   "sample_data": {
     // blockindex: This value can be any valid block height number from your coins blockchain
@@ -782,7 +910,7 @@ exports.api_page = {
         "enabled": true
       },
       // getbasicstats: a collection of settings that pertain to the /ext/getbasicstats api endpoint
-      //                Returns basic statistics about the coin including: block count, circulating supply, USD price, BTC price and # of masternodes (# of masternodes is only applicable to masternode coins)
+      //                Returns basic statistics about the coin including: block count, circulating supply, USD price, default market price and # of masternodes (# of masternodes is only applicable to masternode coins)
       //                NOTE: This api is not used internally and is therefore only publicly available
       "getbasicstats": {
         // enabled: Enable/disable the /ext/getbasicstats api endpoint (true/false)
@@ -790,7 +918,7 @@ exports.api_page = {
         "enabled": true
       },
       // getsummary: a collection of settings that pertain to the /ext/getsummary api endpoint
-      //             Returns a summary of coin data including: difficulty, hybrid difficulty, circulating supply, hash rate, BTC price, network connection count, block count, count of online masternodes and count of offline masternodes (masternode counts are only applicable to masternode coins)
+      //             Returns a summary of coin data including: difficulty, hybrid difficulty, circulating supply, hash rate, default market price, network connection count, block count, count of online masternodes and count of offline masternodes (masternode counts are only applicable to masternode coins)
       //             NOTE: This api is used internally via ajax call to populate many of the panel boxes that are found at the top of all pages. Disabling the api from here will not stop the panel boxes from displaying data
       "getsummary": {
         // enabled: Enable/disable the /ext/getsummary api endpoint (true/false)
@@ -833,6 +961,15 @@ exports.claim_address_page = {
   "enabled": true,
   // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
   "show_panels": false,
+  // page_header: a collection of settings that pertain to the claim address page header
+  "page_header": {
+    // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+    "show_img": true,
+    // show_title: Determine whether to show the page title as defined in "locale.claim_title" (true/false)
+    "show_title": true,
+    // show_description: Determine whether to show the page description as defined in "locale.claim_description" (true/false)
+    "show_description": true
+  },
   // show_header_menu: Show/hide the "Claim Address" header menu item (true/false)
   //                   If set to false, the claim address page can still be accessed via the claim link on each address page
   //                   NOTE: The "claim_address_page.enabled" setting must also be set to true or else the header item will automatically be hidden as well
@@ -848,9 +985,9 @@ exports.sync = {
   //                       If you sync using more than 1 parallel task, then historical balance data for wallet addresses can possibly be saved out-of-order and there is currently no workaround for this.
   //                       Therefore, it is recommended to keep this setting to 1 parallel task for now until a proper solution can be procured for the historical balance issue.
   "block_parallel_tasks": 1,
-  // update_timeout: The amount of time to wait (in milliseconds) before moving to the next block or transaction during blockchain sync or reindex (scripts/sync.sh /path/to/nodejs update or scripts/sync.sh /path/to/nodejs reindex)
+  // update_timeout: The amount of time to wait (in milliseconds) before moving to the next block or transaction during blockchain sync or reindex (scripts/sync.sh /path/to/node update or scripts/sync.sh /path/to/node reindex)
   "update_timeout": 10,
-  // check_timeout: The amount of time to wait (in milliseconds) before moving to the next block or transaction during a check sync (scripts/sync.sh /path/to/nodejs check)
+  // check_timeout: The amount of time to wait (in milliseconds) before moving to the next block or transaction during a check sync (scripts/sync.sh /path/to/node check)
   "check_timeout": 250,
   // save_stats_after_sync_blocks: During index syncronization, stats are saved after processing this many blocks to save time by not having to save after each block
   "save_stats_after_sync_blocks": 100,
@@ -948,8 +1085,17 @@ exports.blockchain_specific = {
       "enabled": true,
       // show_panels: Determine whether to show the panels configured in the shared_pages.page_header section across the top of this page (true/false)
       "show_panels": false,
-      // show_last_updated: determine whether to show a label above the reward data with the last updated date (true/false)
-      "show_last_updated": true
+      // page_header: a collection of settings that pertain to the reward page header
+      "page_header": {
+        // show_img: Determine whether to show the page title image defined in the "shared_pages.page_header.page_title_image" setting (true/false)
+        "show_img": true,
+        // show_title: Determine whether to show the page title as defined in "locale.reward_title" (true/false)
+        "show_title": true,
+        // show_last_updated: Determine whether to show a label below the page title with the last updated date (true/false)
+        "show_last_updated": true,
+        // show_description: Determine whether to show the page description as defined in "locale.reward_description" (true/false)
+        "show_description": true
+      }
     },
     //api_cmds: A collection of settings that pertain to the list of customizable heavycoin rpc api commands
     //          Not all blockchains utilize the same rpc cmds for accessing the internal daemon api. Use these settings to set alternate names for similar api cmds.
@@ -1201,6 +1347,13 @@ exports.loadSettings = function loadSettings() {
     json_settings = fix_deprecated_setting(json_settings, 'social_links', 'shared_pages.page_footer.social_links');
     // fix old deprecated settings from v1.99
     json_settings = fix_deprecated_setting(json_settings, 'shared_pages.page_header.show_search', 'shared_pages.page_header.search.enabled');
+    json_settings = fix_deprecated_setting(json_settings, 'index_page.show_last_updated', 'index_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'masternodes_page.show_last_updated', 'masternodes_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'movement_page.show_last_updated', 'movement_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'network_page.show_last_updated', 'network_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'richlist_page.show_last_updated', 'richlist_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'markets_page.show_last_updated', 'markets_page.page_header.show_last_updated');
+    json_settings = fix_deprecated_setting(json_settings, 'blockchain_specific.heavycoin.reward_page.show_last_updated', 'blockchain_specific.heavycoin.reward_page.page_header.show_last_updated');
     // check if social_links setting exists
     if (json_settings.shared_pages.page_footer.social_links != null) {
       // loop through the social links to look for and change image_url to image_path

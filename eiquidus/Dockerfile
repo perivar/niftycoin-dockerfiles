@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y curl sudo nano net-tools build-essential git-core python telnet iputils-ping libkrb5-dev cron && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - && \
 	apt-get install -y nodejs
 
 RUN git clone https://github.com/team-exor/eiquidus.git app \
